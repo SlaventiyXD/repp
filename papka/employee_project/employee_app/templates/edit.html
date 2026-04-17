@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактирование</title>
+</head>
+
+<body>
+    <form method="POST">
+        {% csrf_token %}
+        <input type="text" name="fio" value="{{ employee.employee_fio }}">
+        <input type="text" name="passport_series" value="{{ employee.passport_series }}">
+        <input type="text" name="passport_number" value="{{ employee.passport_number }}">
+        <input type="text" name="address" value="{{ employee.address }}">
+        <select name="compane_name_id">
+            {% for company in companies %}
+            <option value="{{ company.id }}" {% if company.id == employee.compane_name %} selected {% endif %}>{{ company.company_name }}</option>
+            {% endfor %}
+        </select>
+        <select name="position_id">
+            {% for position in positions %}
+            <option value="{{ position.id }}" {% if position.id == employee.position %} selected {% endif %}>{{ position.position }}</option>
+            {% endfor %}
+        </select>
+        <input type="date" name="start_date" value="{{ employee.start_date }}">
+        <button type="submit">Редактировать</button>
+    </form>
+</body>
+</html>

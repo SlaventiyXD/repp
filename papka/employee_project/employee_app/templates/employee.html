@@ -1,0 +1,111 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Сотрудники</title>
+</head>
+<style>
+    body {
+    font-family: 'Courier New'
+    }
+
+    img {
+    width: 100px;
+    height: auto;
+    }
+
+    .head {
+    display: flex;
+
+    margin: 10px 10px;
+    }
+
+    header {
+    padding: 20px;
+    background: #b6f3f8;
+    }
+    table {
+    margin: 10px;
+    }
+    th, td {
+    border: 1px solid black;
+    order-collapse: collapse;
+    }
+    select, input, button{
+    margin-left:10px;
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 10px;
+    border: 1px solid #80e2ea;
+    background: #91edf5;
+    }
+    .aaa {
+    font-size: 20px;
+    font-weight: bold;
+    }
+
+</style>
+<header>
+    <div class="head" style="align-items: center;">
+
+        <div style="display: flex;">
+            <img  src="{% static 'logo.png' %}">
+            <h1>Мои сотрудники</h1>
+        </div>
+
+
+        <div style="margin: 0px 30px;">
+            <a class="aaa" href="{% url 'add' %}">Добавление</a>
+            <a class="aaa" href="{% url 'logout' %}">Выйти</a>
+        </div>
+
+    </div>
+</header>
+
+<body>
+<div>
+    <form method="GET" style="margin: 15px 0px;">
+        <input type="text" name="search_name" placeholder="Поиск по имени сотрудника">
+        <select name="filter_position">
+            <option value="">Все должности</option>
+            {% for position in positions%}
+            <option value="{{ position.id }}" {% if filter_position == position_id|slugify %} selected {% endif %}>{{ position.position }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Применить</button>
+    </form>
+</div>
+<table>
+    <thead>
+        <tr>
+            <th>ФИО сотрудника</th>
+            <th>Серия паспорта</th>
+            <th>Номер паспорта</th>
+            <th>Адрес профивания</th>
+            <th>Компания(в которой работает сотрудник)</th>
+            <th>Должность(занимаемая сотрудником)</th>
+            <th>Дата начала работы</th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for employ in employees %}
+        <tr>
+            <td>{{employ.employee_fio}}</td>
+            <td>{{employ.passport_series}}</td>
+            <td>{{employ.passport_number}}</td>
+            <td>{{employ.address}}</td>
+            <td>{{employ.compane_name}}</td>
+            <td>{{employ.position}}</td>
+            <td>{{employ.start_date}}</td>
+            <td><a href="{% url 'edit' employ.id %}">Редактировать</a></td>
+            <td><a href="{% url 'delete' employ.id %}">Удалить</a></td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+</body>
+</html>

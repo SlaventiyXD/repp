@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Регистрация</title>
+</head>
+<body>
+<form method="POST">
+    {% csrf_token %}
+    <input type="text" name="username" placeholder="Логин">
+    <input type="password" name="password" placeholder="Пароль">
+    <select name="role">
+        <option value="">Нет роли</option>
+        {% for group in groups %}
+        <option value="{{ group.id }}">{{ group.name }}</option>
+        {% endfor %}
+    </select>
+    <button type="submit">Зарегистрироваться</button>
+</form>
+</body>
+</html>

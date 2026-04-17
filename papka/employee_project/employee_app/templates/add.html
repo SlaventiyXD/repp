@@ -1,0 +1,96 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавление</title>
+</head>
+
+<style>
+    body {
+    font-family: 'Courier New'
+    }
+
+    img {
+    width: 100px;
+    height: auto;
+    }
+    .head {
+    display: flex;
+
+    margin: 10px 10px;
+    }
+
+    header {
+    padding: 20px;
+    background: #b6f3f8;
+    }
+
+    select, input, button{
+    margin:10px;
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 10px;
+    border: 1px solid #80e2ea;
+    background: #91edf5;
+    min-width: 350px;
+
+    }
+
+    form {
+    display: flex;
+    justify-content: center;
+    }
+</style>
+
+<header>
+    <div class="head" style="align-items: center;">
+
+        <div style="display: flex;">
+            <img  src="{% static 'logo.png' %}">
+            <h1>Мои сотрудники</h1>
+        </div>
+
+
+        <div style="margin: 0px 30px;">
+            <a class="aaa" href="{% url 'add' %}">Добавление</a>
+            <a class="aaa" href="{% url 'auth' %}">Выйти</a>
+
+        </div>
+
+    </div>
+</header>
+
+<body>
+    <form method="POST">
+        {% csrf_token %}
+        <div>
+            <div>
+                <input type="text" name="fio" placeholder="ФИО"><br>
+                <input type="text" name="passport_series" placeholder="Серия паспорта"><br>
+                <input type="text" name="passport_number" placeholder="Номер паспорта"><br>
+                <input type="text" name="address" placeholder="Адрес проживания">
+            </div>
+            <div>
+                <select name="compane_name_id">
+                    <option value="">Нет компании</option>
+                    {% for company in companies %}
+                    <option value="{{ company.id }}">{{ company.company_name }}</option>
+                    {% endfor %}
+                </select><br>
+                <select name="position_id">
+                    {% for position in positions %}
+                    <option value="{{ position.id }}">{{ position.position }}</option>
+                    {% endfor %}
+                </select><br>
+                <input type="date" name="start_date" value="{{ employee.start_date }}">
+            </div>
+            <div>
+                <button type="submit">Редактировать</button>
+            </div>
+
+        </div>
+
+    </form>
+</body>
+</html>
